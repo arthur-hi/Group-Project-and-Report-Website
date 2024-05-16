@@ -1044,6 +1044,8 @@ game.scenes.fightScene2.functions.push(() => {
 
     enemyAttackAnimation = () => {
         let damage = randomInt(1, 25);
+        // image for enemy attack
+        enemy.sprite.style.backgroundImage = 'url(./spybotAttack.png)';
         // text for enemy attack
         text.innerHTML = `<p>SpyBot used Attack!</p>`
         // css animation
@@ -1097,6 +1099,7 @@ game.scenes.fightScene2.functions.push(() => {
             }, 3000);
         } else {
             setTimeout(() => {
+                enemy.sprite.style.backgroundImage = 'url(./spybot.png)';
                 enemy.sprite.style.animation = 'idle 1s infinite';
                 player.sprite.style.backgroundImage = 'url(./idle.png)';
                 player.sprite.style.animation = 'idle 0.5s infinite';
@@ -1862,6 +1865,8 @@ game.scenes.finalbattle.functions.push(() => {
                 let damage = randomInt(1, 25);
                 // text for enemy attack
                 text.innerHTML = `<p>SpyBot used Attack!</p>`
+                // enemy attack sprite
+                enemy.sprite.style.backgroundImage = 'url(./spybotAttack.png)';
                 // css animation
                 enemy.sprite.style.animation = 'enemyAttack .75s';
                 setTimeout(() => {
@@ -1898,6 +1903,7 @@ game.scenes.finalbattle.functions.push(() => {
                         `;
                     }, 2000);
                     setTimeout(() => {
+                        enemy.sprite.style.backgroundImage = 'url(./spybot.png)';
                         enemy.sprite.style.animation = 'idle 1s infinite';
                         player.sprite.style.backgroundImage = 'url(./idle.png)';
                         player.sprite.style.animation = 'idle 0.5s infinite';
