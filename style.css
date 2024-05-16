@@ -1,0 +1,627 @@
+@font-face {
+    font-family: 'Classic`';
+    src: url(./classic.ttf);
+}
+
+@font-face {
+    font-family: 'Counting Apples';
+    src: url(./Counting\ Apples.ttf);
+}
+
+@font-face {
+    font-family: 'Varnished';
+    src: url(./Varnished.ttf);
+}
+
+body.dark {
+    background-color: #2e3081;
+    color: #c7c8fe;
+}
+
+.bg-dark {
+    background-color: #1b1c4b80 !important;
+    color: #a5a7fc !important;
+}
+
+.bg-light {
+    background-color: #a5a7fc80 !important;
+    color: #1b1c4b !important;
+}
+
+section {
+    position: relative;
+    overflow: hidden;
+}
+
+section>div.bg {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.5;
+    transition: filter 0.5s;
+}
+
+section.unblur:hover>div.bg {
+    filter: blur(0);
+    -webkit-filter: blur(0);
+    transition: filter 0.5s;
+}
+
+section.shadow:hover>div.container {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 1),
+        0 0 1em rgba(0, 0, 0, 0.9);
+    transition: text-shadow 0.5s;
+}
+
+section.bg-light:hover>div.container {
+    text-shadow: none;
+}
+
+section#about>div.bg {
+    background-image: url('https://images.unsplash.com/photo-1508780709619-79562169bc64?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
+section#privacy>div.bg {
+    background-image: url('https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
+section#security-controls>div.bg {
+    background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
+section#game>div.bg {
+    background-image: url('https://images.unsplash.com/photo-1650227794474-0f7b2c23dd4b?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: #2e3081;
+    border-color: #2e3081;
+}
+
+.btn-primary:hover {
+    background-color: #1b1c4b;
+    border-color: #1b1c4b;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(46, 48, 129, 0.5);
+}
+
+.btn-primary:active {
+    background-color: #1b1c4b;
+    border-color: #1b1c4b;
+    box-shadow: none;
+}
+
+.btn-secondary {
+    background-color: #a5a7fc;
+    border-color: #a5a7fc;
+}
+
+.btn-secondary:hover {
+    background-color: #7e81e6;
+    border-color: #7e81e6;
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(165, 167, 252, 0.5);
+}
+
+.btn-secondary:active {
+    background-color: #7e81e6;
+    border-color: #7e81e6;
+    box-shadow: none;
+}
+
+.game {
+    font: 1rem 'Classic`', sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    max-height: 354px;
+
+    background: rgb(2, 0, 36);
+    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 25%, rgba(9, 9, 121, 1) 50%, rgba(0, 212, 255, 1) 100%);
+
+    /* Add a border radius to top */
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
+    outline: black 2px solid;
+
+    position: relative;
+
+    /* hide excess */
+    overflow: hidden !important;
+}
+
+@media (max-width: 540px) {
+    .game {
+        max-height: 354px;
+    }
+
+    #fight>#background {
+        background-size: 110% 100% !important;
+        background-position-x: .25rem !important;
+        background-position-y: -3.25rem !important;
+    }
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    background-color: white;
+    color: #c7c8fe;
+
+    outline: black 2px solid;
+
+    /* Add a border radius to bottom */
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+
+    /* center children */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-controls button {
+    margin: 0 0.5rem;
+}
+
+.fullscreen {
+    position: fixed;
+    top: 1rem;
+    left: 0;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 80vh;
+    margin: 0;
+}
+
+.fullscreen>.game {
+    height: 100%;
+}
+
+#fight {
+    color: black;
+}
+
+#fight>#background {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
+    background-image: url(./background.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    image-rendering: pixelated;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+#fight>#title {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    ;
+    outline: 2px solid black;
+    background-color: white;
+    z-index: 1;
+
+    padding-top: .25rem;
+    padding-bottom: 1rem;
+    padding-left: .25rem;
+    padding-right: 1rem;
+
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+
+    font-size: medium;
+}
+
+.enemy {
+    display: block;
+    position: absolute;
+    /*outline: 2px solid red;*/
+    z-index: 1;
+
+    /* pos */
+    top: 2rem;
+    right: 1rem;
+
+    /* size */
+    width: calc(50% - 2rem);
+    height: 50%;
+}
+
+.enemy>.sprite {
+    display: block;
+    position: absolute;
+    z-index: 1;
+
+    /* pos */
+    bottom: 0rem;
+    left: 2rem;
+
+    /* size */
+    width: 9rem;
+    height: 9rem;
+
+    /* stop tiling */
+    background-repeat: no-repeat;
+
+    /* stretch */
+    background-size: contain;
+
+    /* pixel render */
+    image-rendering: pixelated;
+}
+
+.player {
+    display: block;
+    position: absolute;
+    z-index: 1;
+
+    /* pos */
+    bottom: 5rem;
+    left: 1rem;
+
+    /* size */
+    width: calc(50% - 2rem);
+    height: 50%;
+}
+
+.player>.sprite {
+    display: block;
+    position: absolute;
+    z-index: 1;
+
+    /* pos */
+    bottom: 0rem;
+    left: 2rem;
+
+    /* size */
+    width: 9rem;
+    height: 9rem;
+
+    /* stop tiling */
+    background-repeat: no-repeat;
+
+    /* stretch */
+    background-size: contain;
+
+    /* pixel render */
+    image-rendering: pixelated;
+}
+
+.textBox {
+    display: block;
+    position: absolute;
+    background: black;
+    z-index: 1;
+
+    /* pos */
+    bottom: 0rem;
+    left: 0rem;
+
+    /* size */
+    width: 100%;
+    height: 4rem;
+
+    /* padding */
+    padding-top: .1rem;
+
+    /* font */
+    font-size: small;
+}
+
+.innerTextBox {
+    display: block;
+    background: white;
+    z-index: 1;
+
+    /* pos */
+    bottom: 0rem;
+    left: 0rem;
+
+    /* size */
+    width: 100%;
+    height: 100%;
+
+    /* font */
+    font-size: small;
+
+    /* border radius */
+    border-radius: .5rem;
+
+    /* padding */
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    padding-left: .25rem;
+    padding-right: .25rem;
+}
+
+.entityShadow {
+    display: block;
+    position: absolute;
+    background: black;
+    z-index: 1;
+
+    /* pos */
+    bottom: 0rem;
+    left: 2rem;
+
+    /* size */
+    width: calc(100% - 4rem);
+    height: 25%;
+
+    /* blur */
+    filter: blur(1.5rem);
+    -webkit-filter: blur(1.5rem);
+
+    /* opacity */
+    opacity: .5;
+
+    /* border radius */
+    border-radius: 100rem;
+}
+
+#attack1,
+#attack2,
+#attack3 {
+    position: absolute;
+    outline: 2px solid blue;
+    z-index: 1;
+}
+
+.fromRight {
+    /* push offscreen */
+    right: -100%;
+}
+
+.fromLeft {
+    /* push offscreen */
+    left: -100%;
+}
+
+.fromBottom {
+    /* push offscreen */
+    bottom: -100%;
+}
+
+.flash {
+    position: absolute;
+    display: block;
+    z-index: 10;
+
+    /* pos */
+    bottom: 0;
+    left: 0;
+
+    /* size */
+    width: 100%;
+    height: 100%;
+
+    /* color */
+    background-color: white;
+
+    /* flash */
+    animation: flash 1s;
+
+    /* hide */
+    opacity: 0;
+}
+
+.attack {
+    z-index: 10 !important;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes hit {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes playerAttack {
+    0% {
+        bottom: 0rem;
+        left: 2rem;
+    }
+
+    40% {
+        bottom: -1rem;
+        left: -25%;
+    }
+
+    60% {
+        bottom: 2rem;
+        left: 125%;
+    }
+
+    65% {
+        bottom: 2rem;
+        left: 125%;
+    }
+
+    100% {
+        bottom: 0rem;
+        left: 2rem;
+    }
+}
+
+@keyframes enemyAttack {
+    0% {
+        bottom: 0rem;
+        left: 0rem;
+    }
+
+    40% {
+        bottom: 1rem;
+        left: 25%;
+    }
+
+    60% {
+        bottom: -2rem;
+        left: -90%;
+    }
+
+    65% {
+        bottom: -2rem;
+        left: -90%;
+    }
+
+    100% {
+        bottom: 0rem;
+        left: 0rem;
+    }
+}
+
+@keyframes idle {
+    0% {
+        bottom: 0rem;
+    }
+
+    50% {
+        bottom: .1rem;
+    }
+
+    100% {
+        bottom: 0rem;
+    }
+}
+
+@keyframes fromLeft {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes fromRight {
+    0% {
+        right: -100%;
+    }
+
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes fromBottom {
+    0% {
+        bottom: -100%;
+    }
+
+    100% {
+        bottom: 0;
+    }
+}
+
+@keyframes glow {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    25% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    49% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    99% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-200%);
+    }
+}
+@keyframes scrollOffset {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-110%);
+    }
+}
+@keyframes scrollOffsetFurther {
+    0% {
+        transform: translateX(200%);
+    }
+    100% {
+        transform: translateX(-90%);
+    }   
+}
+
+.ca {
+    font: 2rem 'Counting Apples', sans-serif;
+}
+.va {
+    font: 2rem 'Varnished', sans-serif;
+}

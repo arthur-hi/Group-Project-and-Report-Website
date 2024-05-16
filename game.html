@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Security Fundamentals</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="dark">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Computer Industry - CybSec</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./about.html">What is Cyber Security?</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./privacy.html">Understanding Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./security-controls.html">Mitigating Threats</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./game.html" style="color: white;">Play Game</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="game" class="py-5" style="min-height: 100vh;">
+            <div class="container">
+                <h2>Interactive Game</h2>
+                <p>Experience the fundamentals in a more interactive and hands-on approach.</p>
+            </div>
+            <div class="container" style="max-width: 540px;">
+                <div class="game"></div>
+                <div class="game-controls">
+                    <button class="btn btn-primary">Pause Game</button>
+                    <button class="btn btn-secondary">Fullscreen</button>
+                    <button class="btn btn-danger">End Game</button>
+                </div>
+            </div>
+            <div class="bg"></div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="http://unpkg.com/tone"></script>
+    <script src="./gameaudio.js"></script>
+    <script src="./game.js"></script>
+</body>
+
+</html>
