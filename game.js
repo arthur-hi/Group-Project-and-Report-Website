@@ -945,7 +945,7 @@ game.scenes.fightScene2.functions.push(() => {
 
     // change enemy sprite
     enemy.sprite = fightScene2.enemy.querySelector('.sprite')
-    enemy.sprite.style.backgroundImage = 'url(./spyBot.png)';
+    enemy.sprite.style.backgroundImage = 'url(./spybot.png)';
 
     // get text box
     text = fightScene2.textBox.querySelector('.innerTextBox');
@@ -1797,7 +1797,7 @@ game.scenes.finalbattle.functions.push(() => {
             }
 
             // switch enemy sprite and update text
-            enemy.sprite.style.backgroundImage = 'url(./spyBot.png)';
+            enemy.sprite.style.backgroundImage = 'url(./spybot.png)';
             text.innerHTML = `
                 <p>Your network is overwhelmed!</p>
                 <p>All the malware is attacking at once!</p>
@@ -1805,7 +1805,7 @@ game.scenes.finalbattle.functions.push(() => {
             finalbattle.title.style.color = 'black';
             // change enemy sprite
             enemy.sprite = finalbattle.enemy.querySelector('.sprite')
-            enemy.sprite.style.backgroundImage = 'url(./spyBot.png)';
+            enemy.sprite.style.backgroundImage = 'url(./spybot.png)';
             
             // intervals
             clearInterval(finalbattle.intervals.firefoehealth);
