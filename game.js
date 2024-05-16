@@ -365,6 +365,8 @@ game.scenes.fightScene1.functions.push(() => {
         game.scenes.fightScene1.intervals.push(setInterval(() => {
             fightScene1.playerHP.innerHTML = `HP ${player.HP}/${player.MaxHP}`;
             if (player.HP <= 0) {
+                //set player sprite to dead
+                player.sprite.style.backgroundImage = 'url(./dead.png)';
                 fightScene1.playerHP.innerHTML = 'HP 0/100';
                 fightScene1.playerHP.style.color = 'red';
                 fightScene1.playerHP.style.animation = 'shake 0.5s';
@@ -999,6 +1001,8 @@ game.scenes.fightScene2.functions.push(() => {
             game.scenes.fightScene2.intervals.push(setInterval(() => {
                 fightScene2.playerHP.innerHTML = `HP ${player.HP}/${player.MaxHP}`;
                 if (player.HP <= 0) {
+                    //set player sprite to dead
+                    player.sprite.style.backgroundImage = 'url(./dead.png)';
                     fightScene2.playerHP.innerHTML = 'HP 0/100';
                     fightScene2.playerHP.style.color = 'red';
                     fightScene2.playerHP.style.animation = 'shake 0.5s';
@@ -1349,6 +1353,8 @@ game.scenes.fightScene3.functions.push(() => {
             game.scenes.fightScene3.intervals.push(setInterval(() => {
                 fightScene3.playerHP.innerHTML = `HP ${player.HP}/${player.MaxHP}`;
                 if (player.HP <= 0) {
+                    //set player sprite to dead
+                    player.sprite.style.backgroundImage = 'url(./dead.png)';
                     fightScene3.playerHP.innerHTML = 'HP 0/100';
                     fightScene3.playerHP.style.color = 'red';
                     fightScene3.playerHP.style.animation = 'shake 0.5s';
@@ -1647,6 +1653,8 @@ game.scenes.finalbattle.functions.push(() => {
             finalbattle.intervals.playerhealth=setInterval(() => {
                 finalbattle.playerHP.innerHTML = `HP ${player.HP}/${player.MaxHP}`;
                 if (player.HP <= 0) {
+                    //set player sprite to dead
+                    player.sprite.style.backgroundImage = 'url(./dead.png)';
                     clearInterval(finalbattle.intervals.firefoehealth);
                     clearInterval(finalbattle.intervals.spybothealth);
                     clearInterval(finalbattle.intervals.intrusionImphealth);
