@@ -82,6 +82,10 @@ section#game>div.bg {
     background-image: url('https://images.unsplash.com/photo-1650227794474-0f7b2c23dd4b?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 }
 
+section#download>div.bg {
+    background-image: url('https://images.unsplash.com/photo-1556075798-4825dfaaf498?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
 /* Button styles */
 .btn-primary {
     background-color: #2e3081;
