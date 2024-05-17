@@ -1155,16 +1155,16 @@ game.scenes.spyBotVictory.element = spyBotVictory.container;
 // fight scene 3, IntrusionImp 
 
 let fightScene3 = {
-    background: fightScene1.background,
-    title: fightScene1.title,
-    playerHP: fightScene1.playerHP,
+    background: fightScene1.background.cloneNode(true),
+    title: fightScene1.title.cloneNode(true),
+    playerHP: fightScene1.playerHP.cloneNode(true),
     enemy: fightScene1.enemy.cloneNode(true),
     player: fightScene1.player.cloneNode(true),
     attackButton1: fightScene1.attackButton1,
     attackButton2: fightScene1.attackButton2,
     attackButton3: fightScene1.attackButton3,
     attackButton4: fightScene1.attackButton4,
-    textBox: fightScene1.textBox,
+    textBox: fightScene1.textBox.cloneNode(true),
     container: document.createElement('div')
 }
 
@@ -1388,7 +1388,7 @@ game.scenes.fightScene3.functions.push(() => {
     }
 
     enemyAttackAnimation = () => {
-        let damage = randomInt(1, 25);
+        let damage = randomInt(1, 10);
         // text for enemy attack
         text.innerHTML = `<p>IntrusionImp used Attack!</p>`
         // css animation
@@ -1403,8 +1403,47 @@ game.scenes.fightScene3.functions.push(() => {
             player.HP -= damage;
             text.innerHTML += `<p>IntrusionImp dealt ${damage} damage!</p>`;
         }, 500);
+
+        let extraDelayForPatch = 0;
+        let extraDelayForFirewall = 0;
+
+        // has player used patch
+        if (player.vulnerableTo.patch) {
+            extraDelayForPatch = 2000;
+            // css animation
+            setTimeout(() => {
+                enemy.sprite.style.animation = 'idle 1s infinite';
+                player.sprite.style.animation = 'idle 0.5s infinite';
+            }, 2000);
+            setTimeout(() => {
+                enemy.sprite.style.animation = 'enemyAttack .75s';
+            }, 2500);
+            setTimeout(() => {
+                playAttackSound();
+            }, 2750);
+            setTimeout(() => {
+                player.sprite.style.backgroundImage = 'url(./hit.png)';
+                player.sprite.style.animation = 'hit 0.5s';
+                playHitSound();
+                damage = randomInt(10, 16)
+                player.HP -= damage;
+                text.innerHTML = `
+                    <p>Unpatched Exploit!</p>
+                    <p>IntrusionImp dealt <span style="color: red">${damage}</span> additional damage!</p>
+                `;
+            }, 3000);
+        } else {
+            // chance to make player vulnerable to patch
+            if (randomInt(1, 100) <= 25) {
+                player.vulnerableTo.patch = true;
+                text.innerHTML += `<p>Your system is vulnerable to Unpatched Exploit!</p>`;
+            }
+        }
+
+
         // has player secured firewall?
         if (player.vulnerableTo.firewall) {
+            extraDelayForFirewall = 2000;
             // css animation
             setTimeout(() => {
                 enemy.sprite.style.animation = 'idle 1s infinite';
@@ -1420,43 +1459,29 @@ game.scenes.fightScene3.functions.push(() => {
                 player.sprite.style.backgroundImage = 'url(./hit.png)';
                 player.sprite.style.animation = 'hit 0.5s';
                 playHitSound();
+                damage = randomInt(10, 32)
                 player.HP -= damage;
                 text.innerHTML = `
                     <p>Data leak!</p>
-                    <p>IntrusionImp dealt <span style="color: red">${randomInt(5, 20)*2}</span> additional damage!</p>
+                    <p>IntrusionImp dealt <span style="color: red">${damage}</span> additional damage!</p>
                 `;
             }, 2000);
-            setTimeout(() => {
-                enemy.sprite.style.animation = 'idle 1s infinite';
-                player.sprite.style.backgroundImage = 'url(./idle.png)';
-                player.sprite.style.animation = 'idle 0.5s infinite';
-
-                text.innerHTML = `
-                <p>An IntrusionImp has been detected!</p>
-                <p>Defend your network to prevent data theft!</p>
-            `;
-                // check if player is dead
-                if (player.HP > 0) {
-                    loadDefaultButtons();
-                }
-            }, 3000);
-        } else {
-            setTimeout(() => {
-                enemy.sprite.style.animation = 'idle 1s infinite';
-                player.sprite.style.backgroundImage = 'url(./idle.png)';
-                player.sprite.style.animation = 'idle 0.5s infinite';
-            }, 1000);
-            setTimeout(() => {
-                text.innerHTML = `
-                <p>An IntrusionImp has been detected!</p>
-                <p>Defend your network to prevent data theft!</p>
-            `;
-                // check if player is dead
-                if (player.HP > 0) {
-                    loadDefaultButtons();
-                }
-            }, 2000);
         }
+
+        setTimeout(() => {
+            enemy.sprite.style.animation = 'idle 1s infinite';
+            player.sprite.style.backgroundImage = 'url(./idle.png)';
+            player.sprite.style.animation = 'idle 0.5s infinite';
+
+            text.innerHTML = `
+            <p>An IntrusionImp has been detected!</p>
+            <p>Defend your network to prevent data theft!</p>
+        `;
+            // check if player is dead
+            if (player.HP > 0) {
+                loadDefaultButtons();
+            }
+        }, 2000 + extraDelayForPatch + extraDelayForFirewall);
     }
 });
 
@@ -1702,6 +1727,35 @@ game.scenes.finalbattle.functions.push(() => {
             }, 2000);
         } else {
             text.innerHTML = `<p>Firefoe was too strong to be affected by Purge Malware!</p>`;
+            document.querySelector('.game-controls').innerHTML = '';
+            setTimeout(() => {
+                enemyTurn();
+            }, 2000);
+        }
+    }
+
+    isolateMalware = () => {
+        // is player vulnerable to malware?
+        if (player.vulnerableTo.malware) {
+            // is enemy health less than 50%?
+            if (finalbattle.enemies.firefoe.HP <= 32) {
+                // text for player attack
+                text.innerHTML = `<p>You used Isolate Malware!</p>
+            <p>You gained resistance to Firefoe's attacks!</p>`;
+                finalbattle.enemies.firefoe.vulnerableTo.purge = true;
+                document.querySelector('.game-controls').innerHTML = '';
+                setTimeout(() => {
+                    enemyTurn();
+                }, 2000);
+            } else {
+                text.innerHTML = `<p>Firefoe was too strong to be affected by Isolate Malware!</p>`;
+                document.querySelector('.game-controls').innerHTML = '';
+                setTimeout(() => {
+                    enemyTurn();
+                }, 2000);
+            }
+        } else {
+            text.innerHTML = `<p>You have already isolated Malware!</p>`;
             document.querySelector('.game-controls').innerHTML = '';
             setTimeout(() => {
                 enemyTurn();
@@ -2098,7 +2152,7 @@ game.scenes.finalbattle.functions.push(() => {
             }
 
             enemyAttackAnimation = () => {
-                let damage = randomInt(1, 15);
+                let damage = randomInt(1, 10);
                 // text for enemy attack
                 text.innerHTML = `<p>IntrusionImp used Attack!</p>`
                 // css animation
@@ -2113,8 +2167,47 @@ game.scenes.finalbattle.functions.push(() => {
                     player.HP -= damage;
                     text.innerHTML += `<p>IntrusionImp dealt ${damage} damage!</p>`;
                 }, 500);
+
+                let extraDelayForPatch = 0;
+                let extraDelayForFirewall = 0;
+
+                // has player used patch
+                if (player.vulnerableTo.patch) {
+                    extraDelayForPatch = 2000;
+                    // css animation
+                    setTimeout(() => {
+                        enemy.sprite.style.animation = 'idle 1s infinite';
+                        player.sprite.style.animation = 'idle 0.5s infinite';
+                    }, 2000);
+                    setTimeout(() => {
+                        enemy.sprite.style.animation = 'enemyAttack .75s';
+                    }, 2500);
+                    setTimeout(() => {
+                        playAttackSound();
+                    }, 2750);
+                    setTimeout(() => {
+                        player.sprite.style.backgroundImage = 'url(./hit.png)';
+                        player.sprite.style.animation = 'hit 0.5s';
+                        playHitSound();
+                        damage = randomInt(10, 16)
+                        player.HP -= damage;
+                        text.innerHTML = `
+                            <p>Unpatched Exploit!</p>
+                            <p>IntrusionImp dealt <span style="color: red">${damage}</span> additional damage!</p>
+                        `;
+                    }, 3000);
+                } else {
+                    // chance to make player vulnerable to patch
+                    if (randomInt(1, 100) <= 25) {
+                        player.vulnerableTo.patch = true;
+                        text.innerHTML += `<p>Your system is vulnerable to Unpatched Exploit!</p>`;
+                    }
+                }
+
+
                 // has player secured firewall?
                 if (player.vulnerableTo.firewall) {
+                    extraDelayForFirewall = 2000;
                     // css animation
                     setTimeout(() => {
                         enemy.sprite.style.animation = 'idle 1s infinite';
@@ -2130,42 +2223,29 @@ game.scenes.finalbattle.functions.push(() => {
                         player.sprite.style.backgroundImage = 'url(./hit.png)';
                         player.sprite.style.animation = 'hit 0.5s';
                         playHitSound();
+                        damage = randomInt(10, 32)
                         player.HP -= damage;
                         text.innerHTML = `
                             <p>Data leak!</p>
-                            <p>IntrusionImp dealt <span style="color: red">${randomInt(5, 20)*2}</span> additional damage!</p>
+                            <p>IntrusionImp dealt <span style="color: red">${damage}</span> additional damage!</p>
                         `;
                     }, 2000);
-                    setTimeout(() => {
-                        enemy.sprite.style.animation = 'idle 1s infinite';
-                        player.sprite.style.backgroundImage = 'url(./idle.png)';
-                        player.sprite.style.animation = 'idle 0.5s infinite';
-
-                        text.innerHTML = `
-                        <p>An IntrusionImp has been detected!</p>
-                        <p>Defend your network to prevent data theft!</p>
-                    `;
-                        // check if player is dead
-                        if (player.HP > 0) {
-                            loadDefaultButtons();
-                        }
-                    }, 3000);
-                } else {
-                    setTimeout(() => {
-                        enemy.sprite.style.animation = 'idle 1s infinite';
-                        player.sprite.style.backgroundImage = 'url(./idle.png)';
-                        player.sprite.style.animation = 'idle 0.5s infinite';
-
-                        text.innerHTML = `
-                        <p>An IntrusionImp has been detected!</p>
-                        <p>Defend your network to prevent data theft!</p>
-                    `;
-                        // check if player is dead
-                        if (player.HP > 0) {
-                            loadDefaultButtons();
-                        }
-                    }, 2000);
                 }
+
+                setTimeout(() => {
+                    enemy.sprite.style.animation = 'idle 1s infinite';
+                    player.sprite.style.backgroundImage = 'url(./idle.png)';
+                    player.sprite.style.animation = 'idle 0.5s infinite';
+
+                    text.innerHTML = `
+                    <p>An IntrusionImp has been detected!</p>
+                    <p>Defend your network to prevent data theft!</p>
+                `;
+                    // check if player is dead
+                    if (player.HP > 0) {
+                        loadDefaultButtons();
+                    }
+                }, 2000 + extraDelayForPatch + extraDelayForFirewall);
             }
 
             enemyAttackAnimation();
