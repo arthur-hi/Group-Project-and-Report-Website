@@ -670,6 +670,8 @@ fightScene1.attackButton4.textContent = 'Skip Turn';
 fightScene1.attackButton4.classList.add('btn', 'btn-secondary');
 fightScene1.attackButton4.addEventListener('click', () => {
     playDingSound();
+    document.querySelector('.game-controls').innerHTML = '';
+    enemyTurn();
 });
 
 fightScene1.buttons = {
