@@ -1763,6 +1763,39 @@ game.scenes.finalbattle.functions.push(() => {
         }
     }
 
+    enemyAttackAnimation = () => {
+        let damage = randomInt(1, 9);
+        if (player.vulnerableTo.firewall) {
+            damage += randomInt(20, 50);
+        }
+        // text for enemy attack
+        text.innerHTML = `<p>Firefoe used Attack!</p>`
+        // css animation
+        enemy.sprite.style.animation = 'enemyAttack .75s';
+        setTimeout(() => {
+            playAttackSound();
+        }, 250);
+        setTimeout(() => {
+            player.sprite.style.backgroundImage = 'url(./hit.png)';
+            player.sprite.style.animation = 'hit 0.5s';
+            playHitSound();
+            player.HP -= damage;
+            text.innerHTML += `<p>Firefoe dealt ${damage} damage!</p>`;
+        }, 500);
+        setTimeout(() => {
+            enemy.sprite.style.animation = 'idle 1s infinite';
+            player.sprite.style.backgroundImage = 'url(./idle.png)';
+            player.sprite.style.animation = 'idle 0.5s infinite';
+        }, 1000);
+        setTimeout(() => {
+            text.innerHTML = `<p>Strengthen the network to prevent FirewallFoe’s breach!</p>`;
+            // check if player is dead
+            if (player.HP > 0) {
+                loadDefaultButtons();
+            }
+        }, 2000);
+    }
+
     enemyTurn = () => {
         if (finalbattle.enemies.firefoe.HP > 0) {
             enemyAttackAnimation();
@@ -1918,7 +1951,7 @@ game.scenes.finalbattle.functions.push(() => {
             }
 
             enemyAttackAnimation = () => {
-                let damage = randomInt(1, 25);
+                let damage = randomInt(1, 16);
                 // text for enemy attack
                 text.innerHTML = `<p>SpyBot used Attack!</p>`
                 // enemy attack sprite
