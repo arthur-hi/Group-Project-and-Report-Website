@@ -531,6 +531,10 @@ function purgeMalware() {
         // text for player attack
         text.innerHTML = `<p>You used Purge Malware!</p>`;
         playerAttackAnimation(true);
+        document.querySelector('.game-controls').innerHTML = '';
+        setTimeout(() => {
+            enemyTurn();
+        }, 2000);
     } else {
         text.innerHTML = `<p>Firefoe was too strong to be affected by Purge Malware!</p>`;
         document.querySelector('.game-controls').innerHTML = '';
@@ -820,6 +824,10 @@ game.scenes.fightScene2.functions.push(() => {
             // text for player attack
             text.innerHTML = `<p>You used Purge Malware!</p>`;
             playerAttackAnimation(true);
+            document.querySelector('.game-controls').innerHTML = '';
+            setTimeout(() => {
+                enemyTurn();
+            }, 2000);
         } else {
             text.innerHTML = `<p>SpyBot was too strong to be affected by Purge Malware!</p>`;
             document.querySelector('.game-controls').innerHTML = '';
@@ -1181,6 +1189,10 @@ game.scenes.fightScene3.functions.push(() => {
             // text for player attack
             text.innerHTML = `<p>You used Purge Malware!</p>`;
             playerAttackAnimation(true);
+            document.querySelector('.game-controls').innerHTML = '';
+            setTimeout(() => {
+                enemyTurn();
+            }, 2000);
         } else {
             text.innerHTML = `<p>IntrusionImp was too strong to be affected by Purge Malware!</p>`;
             document.querySelector('.game-controls').innerHTML = '';
@@ -1680,10 +1692,14 @@ game.scenes.finalbattle.functions.push(() => {
 
     purgeMalware = () => {
         // is enemy vulnerable to purge?
-        if (enemy.vulnerableTo.purge) {
+        if (finalbattle.enemies.firefoe.vulnerableTo.purge) {
             // text for player attack
             text.innerHTML = `<p>You used Purge Malware!</p>`;
             playerAttackAnimation(true);
+            document.querySelector('.game-controls').innerHTML = '';
+            setTimeout(() => {
+                enemyTurn();
+            }, 2000);
         } else {
             text.innerHTML = `<p>Firefoe was too strong to be affected by Purge Malware!</p>`;
             document.querySelector('.game-controls').innerHTML = '';
@@ -1700,10 +1716,14 @@ game.scenes.finalbattle.functions.push(() => {
 
             purgeMalware = () => {
                 // is enemy vulnerable to purge?
-                if (enemy.vulnerableTo.purge) {
+                if (finalbattle.enemies.spyBot.vulnerableTo.purge) {
                     // text for player attack
                     text.innerHTML = `<p>You used Purge Malware!</p>`;
                     playerAttackAnimation(true);
+                    document.querySelector('.game-controls').innerHTML = '';
+                    setTimeout(() => {
+                        enemyTurn();
+                    }, 2000);
                 } else {
                     text.innerHTML = `<p>SpyBot was too strong to be affected by Purge Malware!</p>`;
                     document.querySelector('.game-controls').innerHTML = '';
@@ -1756,12 +1776,12 @@ game.scenes.finalbattle.functions.push(() => {
                 // is player vulnerable to malware?
                 if (player.vulnerableTo.malware) {
                     // is enemy health less than 50%?
-                    if (enemy.HP <= 32) {
+                    if (finalbattle.enemies.spyBot.HP <= 32) {
                         // text for player attack
                         // text for player attack
                         text.innerHTML = `<p>You used Isolate Malware!</p>
                     <p>You gained resistance to SpyBot's attacks!</p>`;
-                        enemy.vulnerableTo.purge = true;
+                        finalbattle.enemies.spyBot.vulnerableTo.purge = true;
                         document.querySelector('.game-controls').innerHTML = '';
                         setTimeout(() => {
                             enemyTurn();
@@ -1923,10 +1943,14 @@ game.scenes.finalbattle.functions.push(() => {
 
             purgeMalware = () => {
                 // is enemy vulnerable to purge?
-                if (enemy.vulnerableTo.purge) {
+                if (finalbattle.enemies.intrusionImp.vulnerableTo.purge) {
                     // text for player attack
                     text.innerHTML = `<p>You used Purge Malware!</p>`;
                     playerAttackAnimation(true);
+                    document.querySelector('.game-controls').innerHTML = '';
+                    setTimeout(() => {
+                        enemyTurn();
+                    }, 2000);
                 } else {
                     text.innerHTML = `<p>IntrusionImp was too strong to be affected by Purge Malware!</p>`;
                     document.querySelector('.game-controls').innerHTML = '';
@@ -1979,12 +2003,12 @@ game.scenes.finalbattle.functions.push(() => {
                 // is player vulnerable to malware?
                 if (player.vulnerableTo.malware) {
                     // is enemy health less than 50%?
-                    if (enemy.HP <= 32) {
+                    if (finalbattle.enemies.intrusionImp.HP <= 32) {
                         // text for player attack
                         // text for player attack
                         text.innerHTML = `<p>You used Isolate Malware!</p>
                     <p>You gained resistance to IntrusionImp's attacks!</p>`;
-                        enemy.vulnerableTo.purge = true;
+                        finalbattle.enemies.intrusionImp.vulnerableTo.purge = true;
                         document.querySelector('.game-controls').innerHTML = '';
                         setTimeout(() => {
                             enemyTurn();
