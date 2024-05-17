@@ -513,6 +513,7 @@ attack.button3.addEventListener('click', () => {
     playDingSound();
     patch();
 });
+
 function patch() {
 
 }
@@ -523,6 +524,7 @@ attack.button4.addEventListener('click', () => {
     playDingSound();
     purgeMalware();
 });
+
 function purgeMalware() {
     // is enemy vulnerable to purge?
     if (enemy.vulnerableTo.purge) {
@@ -551,6 +553,7 @@ defend.button2.addEventListener('click', () => {
     playDingSound();
     SecureFirewall();
 });
+
 function SecureFirewall() {
     if (player.vulnerableTo.firewall) {
         // text for player attack
@@ -576,6 +579,7 @@ defend.button3.addEventListener('click', () => {
     playDingSound();
     patch();
 });
+
 function patch() {
     // is player vulnerable to patch?
     if (player.vulnerableTo.patch) {
@@ -602,6 +606,7 @@ defend.button4.addEventListener('click', () => {
     playDingSound();
     isolateMalware();
 });
+
 function isolateMalware() {
     // is player vulnerable to malware?
     if (player.vulnerableTo.malware) {
@@ -670,7 +675,6 @@ fightScene1.attackButton4.addEventListener('click', () => {
 fightScene1.buttons = {
     attack1: fightScene1.attackButton1,
     attack2: fightScene1.attackButton2,
-    attack3: fightScene1.attackButton3,
     attack4: fightScene1.attackButton4
 }
 
@@ -809,28 +813,13 @@ let fightScene2 = {
 
 game.scenes.fightScene2.functions.push(() => {
     purgeMalware = () => {
-        // is player vulnerable to malware?
-        if (player.vulnerableTo.malware) {
-            // is enemy health less than 50%?
-            if (enemy.HP <= 32) {
-                // text for player attack
-                // text for player attack
-                text.innerHTML = `<p>You used Purge Malware!</p>
-            <p>You gained resistance to SpyBot's attacks!</p>`;
-                enemy.vulnerableTo.purge = true;
-                document.querySelector('.game-controls').innerHTML = '';
-                setTimeout(() => {
-                    enemyTurn();
-                }, 2000);
-            } else {
-                text.innerHTML = `<p>SpyBot was too strong to be affected by Purge Malware!</p>`;
-                document.querySelector('.game-controls').innerHTML = '';
-                setTimeout(() => {
-                    enemyTurn();
-                }, 2000);
-            }
+        // is enemy vulnerable to purge?
+        if (enemy.vulnerableTo.purge) {
+            // text for player attack
+            text.innerHTML = `<p>You used Purge Malware!</p>`;
+            playerAttackAnimation(true);
         } else {
-            text.innerHTML = `<p>You have already purged Malware!</p>`;
+            text.innerHTML = `<p>SpyBot was too strong to be affected by Purge Malware!</p>`;
             document.querySelector('.game-controls').innerHTML = '';
             setTimeout(() => {
                 enemyTurn();
@@ -1185,28 +1174,13 @@ game.scenes.fightScene3.functions.push(() => {
 
 game.scenes.fightScene3.functions.push(() => {
     purgeMalware = () => {
-        // is player vulnerable to malware?
-        if (player.vulnerableTo.malware) {
-            // is enemy health less than 50%?
-            if (enemy.HP <= 32) {
-                // text for player attack
-                // text for player attack
-                text.innerHTML = `<p>You used Purge Malware!</p>
-            <p>You gained resistance to IntrusionImp's attacks!</p>`;
-                enemy.vulnerableTo.purge = true;
-                document.querySelector('.game-controls').innerHTML = '';
-                setTimeout(() => {
-                    enemyTurn();
-                }, 2000);
-            } else {
-                text.innerHTML = `<p>IntrusionImp was too strong to be affected by Purge Malware!</p>`;
-                document.querySelector('.game-controls').innerHTML = '';
-                setTimeout(() => {
-                    enemyTurn();
-                }, 2000);
-            }
+        // is enemy vulnerable to purge?
+        if (enemy.vulnerableTo.purge) {
+            // text for player attack
+            text.innerHTML = `<p>You used Purge Malware!</p>`;
+            playerAttackAnimation(true);
         } else {
-            text.innerHTML = `<p>You have already purged Malware!</p>`;
+            text.innerHTML = `<p>IntrusionImp was too strong to be affected by Purge Malware!</p>`;
             document.querySelector('.game-controls').innerHTML = '';
             setTimeout(() => {
                 enemyTurn();
@@ -1628,7 +1602,7 @@ game.scenes.finalbattle.functions.push(() => {
     // intervals
     game.scenes.finalbattle.functions.push(() => {
         setTimeout(() => {
-            finalbattle.intervals.firefoehealth=setInterval(() => {
+            finalbattle.intervals.firefoehealth = setInterval(() => {
                 finalbattle.title.innerHTML = `Firefoe LV2<br>HP ${finalbattle.enemies.firefoe.HP}/${finalbattle.enemies.firefoe.MaxHP}`;
                 // if half hp, change color to yellow
                 if (finalbattle.enemies.firefoe.HP <= 32) {
@@ -1650,7 +1624,7 @@ game.scenes.finalbattle.functions.push(() => {
         }, 100);
 
         setTimeout(() => {
-            finalbattle.intervals.playerhealth=setInterval(() => {
+            finalbattle.intervals.playerhealth = setInterval(() => {
                 finalbattle.playerHP.innerHTML = `HP ${player.HP}/${player.MaxHP}`;
                 if (player.HP <= 0) {
                     //set player sprite to dead
@@ -1702,35 +1676,34 @@ game.scenes.finalbattle.functions.push(() => {
         player.sprite.classList.remove('attack');
     }
 
+    purgeMalware = () => {
+        // is enemy vulnerable to purge?
+        if (enemy.vulnerableTo.purge) {
+            // text for player attack
+            text.innerHTML = `<p>You used Purge Malware!</p>`;
+            playerAttackAnimation(true);
+        } else {
+            text.innerHTML = `<p>Firefoe was too strong to be affected by Purge Malware!</p>`;
+            document.querySelector('.game-controls').innerHTML = '';
+            setTimeout(() => {
+                enemyTurn();
+            }, 2000);
+        }
+    }
+
     enemyTurn = () => {
         if (finalbattle.enemies.firefoe.HP > 0) {
             enemyAttackAnimation();
-        }
-        else if (finalbattle.enemies.spyBot.HP > 0) {
+        } else if (finalbattle.enemies.spyBot.HP > 0) {
 
             purgeMalware = () => {
-                // is player vulnerable to malware?
-                if (player.vulnerableTo.malware) {
-                    // is enemy health less than 50%?
-                    if (enemy.HP <= 32) {
-                        // text for player attack
-                        // text for player attack
-                        text.innerHTML = `<p>You used Purge Malware!</p>
-                    <p>You gained resistance to SpyBot's attacks!</p>`;
-                        enemy.vulnerableTo.purge = true;
-                        document.querySelector('.game-controls').innerHTML = '';
-                        setTimeout(() => {
-                            enemyTurn();
-                        }, 2000);
-                    } else {
-                        text.innerHTML = `<p>SpyBot was too strong to be affected by Purge Malware!</p>`;
-                        document.querySelector('.game-controls').innerHTML = '';
-                        setTimeout(() => {
-                            enemyTurn();
-                        }, 2000);
-                    }
+                // is enemy vulnerable to purge?
+                if (enemy.vulnerableTo.purge) {
+                    // text for player attack
+                    text.innerHTML = `<p>You used Purge Malware!</p>`;
+                    playerAttackAnimation(true);
                 } else {
-                    text.innerHTML = `<p>You have already purged Malware!</p>`;
+                    text.innerHTML = `<p>SpyBot was too strong to be affected by Purge Malware!</p>`;
                     document.querySelector('.game-controls').innerHTML = '';
                     setTimeout(() => {
                         enemyTurn();
@@ -1817,10 +1790,10 @@ game.scenes.finalbattle.functions.push(() => {
             // change enemy sprite
             enemy.sprite = finalbattle.enemy.querySelector('.sprite')
             enemy.sprite.style.backgroundImage = 'url(./spybot.png)';
-            
+
             // intervals
             clearInterval(finalbattle.intervals.firefoehealth);
-            finalbattle.intervals.spybothealth=setInterval(() => {
+            finalbattle.intervals.spybothealth = setInterval(() => {
                 finalbattle.title.innerHTML = `SpyBot<br>HP ${finalbattle.enemies.spyBot.HP}/${finalbattle.enemies.spyBot.MaxHP}`;
                 // if half hp, change color to yellow
                 if (finalbattle.enemies.spyBot.HP <= 32) {
@@ -1864,11 +1837,10 @@ game.scenes.finalbattle.functions.push(() => {
                     player.sprite.style.animation = 'idle 0.5s infinite';
                     enemy.sprite.style.backgroundImage = 'url(./spybot.png)';
                     enemy.sprite.style.animation = 'idle 1s infinite';
-                }
-                , 1000);
+                }, 1000);
                 player.sprite.classList.remove('attack');
             }
-            
+
             enemyAttackAnimation = () => {
                 let damage = randomInt(1, 25);
                 // text for enemy attack
@@ -1945,32 +1917,16 @@ game.scenes.finalbattle.functions.push(() => {
             }
 
             enemyAttackAnimation();
-        }
-        else if (finalbattle.enemies.intrusionImp.HP > 0) {
+        } else if (finalbattle.enemies.intrusionImp.HP > 0) {
 
             purgeMalware = () => {
-                // is player vulnerable to malware?
-                if (player.vulnerableTo.malware) {
-                    // is enemy health less than 50%?
-                    if (enemy.HP <= 32) {
-                        // text for player attack
-                        // text for player attack
-                        text.innerHTML = `<p>You used Purge Malware!</p>
-                    <p>You gained resistance to IntrusionImp's attacks!</p>`;
-                        enemy.vulnerableTo.purge = true;
-                        document.querySelector('.game-controls').innerHTML = '';
-                        setTimeout(() => {
-                            enemyTurn();
-                        }, 2000);
-                    } else {
-                        text.innerHTML = `<p>IntrusionImp was too strong to be affected by Purge Malware!</p>`;
-                        document.querySelector('.game-controls').innerHTML = '';
-                        setTimeout(() => {
-                            enemyTurn();
-                        }, 2000);
-                    }
+                // is enemy vulnerable to purge?
+                if (enemy.vulnerableTo.purge) {
+                    // text for player attack
+                    text.innerHTML = `<p>You used Purge Malware!</p>`;
+                    playerAttackAnimation(true);
                 } else {
-                    text.innerHTML = `<p>You have already purged Malware!</p>`;
+                    text.innerHTML = `<p>IntrusionImp was too strong to be affected by Purge Malware!</p>`;
                     document.querySelector('.game-controls').innerHTML = '';
                     setTimeout(() => {
                         enemyTurn();
@@ -2058,10 +2014,10 @@ game.scenes.finalbattle.functions.push(() => {
             // change enemy sprite
             enemy.sprite = finalbattle.enemy.querySelector('.sprite')
             enemy.sprite.style.backgroundImage = 'url(./Imp.png)';
-            
+
             // intervals
             clearInterval(finalbattle.intervals.spybothealth);
-            finalbattle.intervals.intrusionImphealth=setInterval(() => {
+            finalbattle.intervals.intrusionImphealth = setInterval(() => {
                 finalbattle.title.innerHTML = `IntrusionImp LV2<br>HP ${finalbattle.enemies.intrusionImp.HP}/${finalbattle.enemies.intrusionImp.MaxHP}`;
                 // if half hp, change color to yellow
                 if (finalbattle.enemies.intrusionImp.HP <= 32) {
@@ -2189,7 +2145,7 @@ game.scenes.finalbattle.functions.push(() => {
             enemyAttackAnimation();
 
         }
-                    
+
     }
 
     enemyAttackAnimation = () => {
